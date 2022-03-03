@@ -14,3 +14,7 @@ Guerrero Diaz Axel Ramon
 - pug
 
 - body-parser
+
+- md5
+
+    npm i express nodemon dotenv pug body-parser md5 --save

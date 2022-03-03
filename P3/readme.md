@@ -12,3 +12,5 @@ Guerrero Diaz Axel Ramon
 - dotenv
 
 - mysql
+
+    npm i express nodemon dotenv mysql --save

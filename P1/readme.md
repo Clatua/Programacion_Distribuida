@@ -12,3 +12,5 @@ Guerrero Diaz Axel Ramon
 - nodemon
 
 - dotenv
+
+    npm i express nodemon dotenv standard --save
