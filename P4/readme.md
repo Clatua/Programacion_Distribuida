@@ -17,4 +17,5 @@ Guerrero Diaz Axel Ramon
 
 - md5
 
-    npm i express nodemon dotenv pug body-parser md5 --save
+- mysql
+    npm i express nodemon dotenv pug body-parser md5 mysql --save
