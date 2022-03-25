@@ -23,6 +23,18 @@ app.get('/registro', function(req, res) {
     res.render('registro');
 });
 
+app.get('/movies', function(req, res) {
+    connection.query('SELECT * FROM telematica4c.movie' ,function(err, result, fields){
+        //console.log(result[0]['titulo'])     
+         res.render('movies',{data:result})
+
+    })
+});
+
+app.get('/movieadd', function(req, res) {
+    res.render('movieadd');
+});
+
 app.get('/dash', function(req, res) {
     console.log(req.body)
 });
@@ -31,7 +43,7 @@ app.post('/registroUser', function(req, res) {
     if(req.body.registro == ""){
         let pass  = md5(req.body.pass) //Ciframos la contraseña.
         //Realizamos la query del insert de los datos enviados.
-        connection.query('INSERT INTO registro (username, email, password) VALUES (?, ?, ?)',[req.body.username, req.body.email, pass], function(err, result, fields){
+        connection.query('INSERT INTO registro (user, email, password) VALUES (?, ?, ?)',[req.body.username, req.body.email, pass], function(err, result, fields){
             
             if (err){
                 throw err; //Si hay un error, lo muestra
@@ -45,12 +57,34 @@ app.post('/registroUser', function(req, res) {
        }
 });
 
+app.post('/addmovie',(req,res)=>{
+    if(req.body.agregarpeli == ""){
+        res.redirect('/movieadd')
+    }else{
+        res.redirect('/404')
+    }
+})
+
+app.post('/addmovies',(req,res)=>{
+    if(req.body.agregar == ""){
+        connection.query('INSERT INTO movie (titulo, descripcion, fecha) VALUES (?, ?, ?)',[req.body.nombre, req.body.descc, req.body.fecha], (err, result, fields)=>{
+            
+            if (err){
+                throw err; //Si hay un error, lo muestra
+                res.redirect('/')
+            }
+        })
+        }else{
+            res.redirect('/movies')
+        }
+})
+
 app.post('/auth', function(req, res) {
     
     if(req.body.sesion == ""){
         let pass = md5(req.body.pass)
         
-        var sql = 'SELECT id, username, email FROM telematica4c.registro WHERE email = "' + req.body.email +'" AND password = "' + pass +'"';
+        var sql = 'SELECT id, user, email FROM telematica4c.registro WHERE email = "' + req.body.email +'" AND password = "' + pass +'"';
         
         connection.query(sql , function(err, resp, fields){
             if(resp.length){
